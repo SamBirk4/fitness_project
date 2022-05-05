@@ -9,7 +9,6 @@ from pymongo import MongoClient
 client = MongoClient()
 db = client.project1
 collection = db.fitness
-
     
 #creating a profile#
 
@@ -52,7 +51,7 @@ def user_profile() -> profile.Profile:
         except ValueError:
             print("\n\tPlease enter your weight in pounds.")
 
-#Option to add#
+# Option to add delete or quit #
 
 def add_new_entry(p1):
 
@@ -77,9 +76,7 @@ def add_new_entry(p1):
             else:
                 raise ValueError('Invalid Input')
         except ValueError:
-            print("\n\tPlease enter 'add' to continue. Otherwise enter 'delete' or 'done'.")
-
-header_lst = ["\nWeight (lbs) ", "Gain or Loss (lbs) ", "BMI ", "Date "] # Headers for the information output from program
+            print("\n\tPlease enter 'add' to continue. Otherwise enter 'delete' or 'done'.") 
 
 def weight_track(p1): # Writes output to csv file
     with open("fitness_track.csv", "a", newline = '') as fitness_log:
@@ -99,7 +96,7 @@ def load_weight():
                     first = False
                     continue
                 print(weight)
-                dict_val = {
+                dict_val = { # Headers for the information output from program
                     "Weight (lbs)" : int(weight.strip("'")),
                     "Gain or Loss (lbs)" : line[1],
                     "BMI" : line[2],
