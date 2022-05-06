@@ -13,6 +13,16 @@ collection = db.fitness
 #creating a profile#
 
 def user_profile() -> profile.Profile:
+
+    '''
+    user_profile -> None :
+
+    This function asks the user for input on name, height, weight.  The height and weight are used to calculate variables
+    in the output of the program i.e. gain/loss.
+
+    Return: None 
+    '''
+
     while True:    
         try: 
             print("\nPlease enter your information.")
@@ -55,6 +65,17 @@ def user_profile() -> profile.Profile:
 
 def add_new_entry(p1):
 
+    '''
+    add_new_entry 
+
+    This function takes in put on a new weight and thats used to calculate gain/loss and BMI.  This function calls on two other
+    functions, weight_track and load_weight (see below for functionality). This returns the desired output of new weight, gain/loss, BMI, date.
+
+    Argunents: p1 - this is the object created from the class in profile.py
+
+    Returns: None  
+    '''
+
     while True:
         try:
             print("\nWhat would you like to do?")
@@ -71,6 +92,7 @@ def add_new_entry(p1):
                 new_weight = input("\nenter weight (lbs): ")
                 p1.add_entry(new_weight) # Will append new weight to list of weights in order to calculate BMI and gain/loss
             elif option.upper() == "DONE":
+                weight_track(p1)
                 load_weight() # Will run load function to print CSV to console if 'done' is selected 
                 break
             else:
@@ -79,11 +101,32 @@ def add_new_entry(p1):
             print("\n\tPlease enter 'add' to continue. Otherwise enter 'delete' or 'done'.") 
 
 def weight_track(p1): # Writes output to csv file
+
+    '''
+    weight_track()
+
+    This function prints the output to the CSV file 'fitness_track.csv'.
+
+    Arguments: p1 - this is the object created from the class in profile.py
+
+    Returns: None
+    '''
+
     with open("fitness_track.csv", "a", newline = '') as fitness_log:
         writer = csv.writer(fitness_log)
         writer.writerow(p1.log_output())
     
 def load_weight():
+
+    '''
+    load_weight()
+
+    This function prints all entries in 'fitness_track.csv' to the console while also printing it to the mongodb database.
+    The out put is formated and given headers when printed to the database. 
+
+    Return: None
+    '''
+    
     with open("fitness_track.csv", "r") as fitness_log:
         csvFile = csv.reader(fitness_log) # Prints all entries in Fitness_trac.csv to the console
         for line in csvFile: # Prints lines to the database 
@@ -106,7 +149,7 @@ def load_weight():
 
 p1 = user_profile()
 add_new_entry(p1)
-weight_track(p1)
+
 
 
 
